@@ -1,0 +1,11 @@
+{
+  "id": "spacetime-graph",
+  "title": "Graph of all NYC Space/Time Directory datasets",
+  "license": "CC0",
+  "description": "",
+  "author": "Bert Spaan",
+  "website": "http://spacetime.nypl.org/",
+  "dependsOn": [
+    "*.transform"
+  ]
+}
