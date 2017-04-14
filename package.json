@@ -1,6 +1,6 @@
 {
   "name": "etl-spacetime-graph",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "NYC Space/Time Directory ETL module: Graph of all NYC Space/Time Directory datasets",
   "main": "spacetime-graph.js",
   "scripts": {
@@ -14,6 +14,7 @@
     "url": "http://github.com/nypl-spacetime/etl-spacetime-graph.git"
   },
   "dependencies": {
+    "graphlib": "^2.1.1",
     "highland": "^2.10.2",
     "ramda": "^0.23.0"
   },

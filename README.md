@@ -31,6 +31,11 @@
 <td>Website</td>
 <td><a href="http://spacetime.nypl.org/">http://spacetime.nypl.org/</a></td>
 </tr>
+
+<tr>
+<td>Depends on</td>
+<td>*.transform</td>
+</tr>
 </tbody>
 </table>
 
@@ -45,7 +50,7 @@ git clone https://github.com/nypl-spacetime/etl-spacetime-graph.git /path/to/etl
 cd /path/to/etl-modules/etl-spacetime-graph
 npm install
 
-spacetime-etl spacetime-graph [<step>]
+spacetime-etl spacetime-graph[.<step>]
 ```
 
 See http://github.com/nypl-spacetime/spacetime-etl for information about Space/Time's ETL tool. More Space/Time ETL modules [can be found on GitHub](https://github.com/search?utf8=%E2%9C%93&q=org%3Anypl-spacetime+etl-&type=Repositories&ref=advsearch&l=&l=).
