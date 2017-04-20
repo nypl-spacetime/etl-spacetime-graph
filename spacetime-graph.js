@@ -1,5 +1,3 @@
-'use strict'
-
 const fs = require('fs')
 const path = require('path')
 const R = require('ramda')
@@ -118,13 +116,15 @@ function addToGraph (graph, obj) {
   return obj
 }
 
-function makeConceptGeometryCollection (objects) {
+function makeConceptGeometry (objects) {
   const geometries = objects
     .map(R.prop('data'))
     .filter(R.has('geometry'))
     .map(R.prop('geometry'))
 
-  if (geometries.length) {
+  if (geometries.length === 1) {
+    return geometries[0]
+  } else if (geometries.length > 1) {
     return {
       type: 'GeometryCollection',
       geometries: geometries
@@ -142,12 +142,20 @@ function makeConceptGeometryCollection (objects) {
 // ],
 
 function makeConceptObjects (objects) {
+  const geometry = makeConceptGeometry(objects)
+  const isGeometryCollection = geometry && geometry.type === 'GeometryCollection'
+
   let geometryIndex = 0
+  const getGeometryIndex = (geometry) => {
+    if (isGeometryCollection) {
+      return geometry ? geometryIndex++ : -1
+    }
+  }
 
   return objects
     .map((object) => Object.assign(object.data, {
       id: expandId(object.datasetId, object.data.id),
-      geometryIndex: object.data.geometry ? geometryIndex++ : -1,
+      geometryIndex: getGeometryIndex(object.data.geometry),
       // hairs: makeConceptHairs(objects),
       relations: object.relations
     }))
@@ -179,9 +187,10 @@ function makeConceptName (objects) {
   const names = objects
     .map(R.path(['data', 'name']))
     .filter(R.identity)
+    .sort((a, b) => b.length - a.length)
 
   if (names.length) {
-    return names.join(', ')
+    return names[0]
   }
 }
 
@@ -205,7 +214,7 @@ function makeConcept (kvStore, component) {
     data: {
       objects: makeConceptObjects(objects)
     },
-    geometry: makeConceptGeometryCollection(objects)
+    geometry: makeConceptGeometry(objects)
   }
 }
 
@@ -226,9 +235,12 @@ function aggregate (config, dirs, tools, callback) {
     .map(readFile)
     .mergeWithLimit(1)
     .map(R.curry(store)(kvStore))
+    .errors((err) => {
+      // TODO: log errors to log file
+    })
     .map(R.curry(addToGraph)(graph))
     .each((obj) => {
-      if (i > 0 && i % 10000 === 0) {
+      if (i > 0 && i % 100000 === 0) {
         console.log(`      Added ${i} items to graph`)
       }
 
