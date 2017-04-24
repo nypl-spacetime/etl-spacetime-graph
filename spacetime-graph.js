@@ -204,6 +204,7 @@ function makeConceptValidUntil (objects) {
 
 function makeConcept (kvStore, component) {
   const objects = component.map(kvStore.get)
+    .filter(R.identity)
 
   return {
     id: makeConceptId(objects),
