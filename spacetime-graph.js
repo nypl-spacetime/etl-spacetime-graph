@@ -219,6 +219,24 @@ function makeConcept (kvStore, component) {
   }
 }
 
+function dfs (graph, vertex, visited) {
+  const doDfs = (vertex) => {
+    if (visited[vertex]) {
+      return
+    }
+
+    visited[vertex] = true
+
+    return R.flatten([
+      graph.predecessors(vertex).map(doDfs),
+      vertex,
+      graph.successors(vertex).map(doDfs)
+    ]).filter(R.identity)
+  }
+
+  return doDfs(vertex)
+}
+
 function aggregate (config, dirs, tools, callback) {
   const step = 'transform'
   const baseDir = path.join(dirs.current, '..', '..', step)
@@ -251,12 +269,26 @@ function aggregate (config, dirs, tools, callback) {
     })
     .errors(console.error)
     .done(() => {
-      H(graphlib.alg.components(graph))
+      console.log(`    Done!`)
+      let c = 0
+
+      const visited = {}
+      H(graph.nodes())
+        .map(R.curry(dfs)(graph, R.__, visited))
+        .compact()
         .map(R.curry(makeConcept)(kvStore))
         .map((concept) => ({
           type: 'object',
           obj: concept
         }))
+        .map((concept) => {
+          if (c > 0 && c % 5000 === 0) {
+            console.log(`      Written ${c} concepts to file`)
+          }
+          c += 1
+
+          return concept
+        })
         .map(H.curry(tools.writer.writeObject))
         .nfcall([])
         .series()
