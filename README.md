@@ -1,6 +1,11 @@
 # NYC Space/Time Directory ETL module: Graph of all NYC Space/Time Directory datasets
 
-[ETL](https://en.wikipedia.org/wiki/Extract,_transform,_load) module for NYPL's [NYC Space/Time Direcory](http://spacetime.nypl.org/). This Node.js module downloads, parses, and/or transforms Graph of all NYC Space/Time Directory datasets data, and creates a NYC Space/Time Directory dataset.
+[ETL](https://en.wikipedia.org/wiki/Extract,_transform,_load) module for NYPL’s [NYC Space/Time Direcory](http://spacetime.nypl.org/). This Node.js module downloads, parses, and/or transforms Graph of all NYC Space/Time Directory datasets data, and creates a NYC Space/Time Directory dataset.
+
+
+## Data
+
+The dataset created by this ETL module’s `aggregate` step can be found in the [data section of the NYC Space/Time Directory website](http://spacetime.nypl.org/#data-spacetime-graph).
 
 ## Details
 
@@ -18,23 +23,33 @@
 </tr>
 
 <tr>
+<td>Description</td>
+<td>All Objects and Relations from all datasets in the NYC Space/Time Directory connected. If Objects are connected with an st:same relationship, they will appear as one Object in the resulting graph NDJSON dataset</td>
+</tr>
+
+<tr>
 <td>License</td>
 <td>CC0</td>
 </tr>
 
 <tr>
-<td>Author</td>
-<td>Bert Spaan</td>
+<td>Contributors</td>
+<td>Bert Spaan (author)</td>
 </tr>
 
 <tr>
-<td>Website</td>
-<td><a href="http://spacetime.nypl.org/">http://spacetime.nypl.org/</a></td>
+<td>Sources</td>
+<td><a href="http://spacetime.nypl.org/#data">All datasets in NYC Space/Time Directory</a></td>
+</tr>
+
+<tr>
+<td>Homepage</td>
+<td><a href="http://spacetime.nypl.org/#data">http://spacetime.nypl.org/#data</a></td>
 </tr>
 
 <tr>
 <td>Depends on</td>
-<td>*.transform</td>
+<td><code>*.transform</code></td>
 </tr>
 </tbody>
 </table>

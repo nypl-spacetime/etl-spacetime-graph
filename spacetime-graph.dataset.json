@@ -2,10 +2,21 @@
   "id": "spacetime-graph",
   "title": "Graph of all NYC Space/Time Directory datasets",
   "license": "CC0",
-  "description": "",
-  "author": "Bert Spaan",
-  "website": "http://spacetime.nypl.org/",
+  "description": "All Objects and Relations from all datasets in the NYC Space/Time Directory connected. If Objects are connected with an st:same relationship, they will appear as one Object in the resulting graph NDJSON dataset",
+  "homepage": "http://spacetime.nypl.org/#data",
   "dependsOn": [
     "*.transform"
+  ],
+   "sources": [
+    {
+      "title": "All datasets in NYC Space/Time Directory",
+      "path": "http://spacetime.nypl.org/#data"
+    }
+  ],
+  "contributors": [
+    {
+      "title": "Bert Spaan",
+      "role": "author"
+    }
   ]
 }
