@@ -25,8 +25,8 @@ function aggregate (config, dirs, tools, callback) {
   const step = 'transform'
   const baseDir = path.join(dirs.current, '..', '..', step)
 
-  const allObjects = readAllFiles(baseDir, 'objects')
-  const allRelations = readAllFiles(baseDir, 'relations')
+  const allObjects = readAllFiles(baseDir, config, 'objects')
+  const allRelations = readAllFiles(baseDir, config, 'relations')
 
   const graph = Graph()
   const concept = Concept(graph)
@@ -37,6 +37,7 @@ function aggregate (config, dirs, tools, callback) {
     allRelations
   ])
     .flatten()
+    .compact()
     .map(R.curry(addToGraph)(graph))
     .errors((err) => {
       // TODO: log errors to file!
